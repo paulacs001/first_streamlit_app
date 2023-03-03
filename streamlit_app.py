@@ -4,6 +4,11 @@ import requests
 import snowflake.connector
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+
+add_fruit = streamlit.text_input('What fruit would you like to add?')
+
+streamlit.write('The user wants to add ', fruit_choice)
+
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT * from fruit_load_list")
 my_data_row = my_cur.fetchall()
