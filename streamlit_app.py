@@ -44,6 +44,7 @@ try:
 except URLError as e:
   streamlit.error()
 
+streamlit.header("The list contains:")
 
 def get_list():
   with my_cnx.cursor() as my_cur:
@@ -57,7 +58,7 @@ if streamlit.button('Load'):
   
 def insert_row(fruit):
   with my_cnx.cursor() as my_cur:
-    my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+    my_cur.execute("insert into fruit_load_list values ('"+ fruit +"')")
     return "Thank for adding" + fruit
  
 
@@ -71,9 +72,8 @@ if streamlit.button('Add fruit'):
   
   
 streamlit.stop()  
-  
-my_cur = my_cnx.cursor()
 
 
-streamlit.header("The list contains:")
+
+
 
