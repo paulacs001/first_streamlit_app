@@ -2,18 +2,8 @@ import streamlit
 import pandas as pd
 import requests
 import snowflake.connector
+from urllib.error import URLError
 
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-
-add_fruit = streamlit.text_input('What fruit would you like to add?')
-
-streamlit.write('The user wants to add ', add_fruit )
-my_cur = my_cnx.cursor()
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
-my_cur.execute("SELECT * from fruit_load_list")
-my_data_row = my_cur.fetchall()
-streamlit.header("The list contains:")
-streamlit.dataframe(my_data_row)
 
 streamlit.title('My Parents New Healthy Diner')
   
@@ -47,3 +37,17 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_c
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 # write your own comment - what does this do?
 streamlit.dataframe(fruityvice_normalized)
+
+streamlit.stop()
+
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+
+add_fruit = streamlit.text_input('What fruit would you like to add?')
+
+streamlit.write('The user wants to add ', add_fruit )
+my_cur = my_cnx.cursor()
+my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+my_cur.execute("SELECT * from fruit_load_list")
+my_data_row = my_cur.fetchall()
+streamlit.header("The list contains:")
+streamlit.dataframe(my_data_row)
