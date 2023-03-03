@@ -45,7 +45,7 @@ except URLError as e:
   streamlit.error()
 
  ####################
-streamlit.header("The list contains:")
+streamlit.header("View and add in our fruit list!")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 
 def get_list():
@@ -55,6 +55,7 @@ def get_list():
   
 if streamlit.button('Load'):
   my_data_row = get_list()
+  my_cnx.close()
   streamlit.dataframe(my_data_row)
 
   
